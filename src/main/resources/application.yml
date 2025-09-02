@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ai-pair-programming-sample
+
+# Spring Boot Actuatorの設定
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.example.aipairprogrammingsample: INFO
+    org.springframework: INFO
