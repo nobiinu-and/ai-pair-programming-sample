@@ -4,13 +4,43 @@ server:
 spring:
   application:
     name: ai-pair-programming-sample
+  
+  # データベース設定（H2 in-memory database）
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ""
+  
+  # JPA/Hibernate設定
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  
+  # H2コンソール（開発用）
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  
+  # Flyway設定
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
 
 # Spring Boot Actuatorの設定
 management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info,flyway
   endpoint:
     health:
       show-details: always
@@ -19,3 +49,4 @@ logging:
   level:
     com.example.aipairprogrammingsample: INFO
     org.springframework: INFO
+    org.flywaydb: DEBUG
