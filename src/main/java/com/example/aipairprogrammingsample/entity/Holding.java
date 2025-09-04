@@ -1,7 +1,9 @@
 package com.example.aipairprogrammingsample.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,6 +19,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "holding")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Holding {
 
     @Id
