@@ -2,6 +2,7 @@ package com.example.aipairprogrammingsample.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @Table(name = "company_metal",
        uniqueConstraints = @UniqueConstraint(columnNames = {"company_id", "metal_id"}))
 @Data
+@NoArgsConstructor
 public class CompanyMetal {
 
     @Id
