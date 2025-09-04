@@ -1,8 +1,12 @@
 package com.example.aipairprogrammingsample.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -13,6 +17,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "company_metal",
        uniqueConstraints = @UniqueConstraint(columnNames = {"company_id", "metal_id"}))
+@Data
 public class CompanyMetal {
 
     @Id
@@ -21,10 +26,12 @@ public class CompanyMetal {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false)
+    @SuppressFBWarnings("EI_EXPOSE_REP") // Entityのため、やむを得ず
     private Company company;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "metal_id", nullable = false)
+    @SuppressFBWarnings("EI_EXPOSE_REP") // Entityのため、やむを得ず
     private Metal metal;
 
     @CreationTimestamp
@@ -35,56 +42,9 @@ public class CompanyMetal {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    // デフォルトコンストラクタ
-    protected CompanyMetal() {}
-
     // コンストラクタ
     public CompanyMetal(Company company, Metal metal) {
         this.company = company;
         this.metal = metal;
-    }
-
-    // Getters and Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public Metal getMetal() {
-        return metal;
-    }
-
-    public void setMetal(Metal metal) {
-        this.metal = metal;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "CompanyMetal{" +
-                "id=" + id +
-                ", company=" + (company != null ? company.getName() : null) +
-                ", metal=" + (metal != null ? metal.getCode() : null) +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
     }
 }

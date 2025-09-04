@@ -1,6 +1,10 @@
 package com.example.aipairprogrammingsample.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +16,9 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "company")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Company {
 
     @Id
@@ -32,9 +39,6 @@ public class Company {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    // デフォルトコンストラクタ
-    protected Company() {}
-
     // コンストラクタ
     public Company(String name) {
         this.name = name;
@@ -43,49 +47,5 @@ public class Company {
     public Company(String name, String contact) {
         this.name = name;
         this.contact = contact;
-    }
-
-    // Getters and Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "Company{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", contact='" + contact + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
     }
 }

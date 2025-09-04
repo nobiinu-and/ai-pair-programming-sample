@@ -3,6 +3,7 @@ package com.example.aipairprogrammingsample.dto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,27 +15,24 @@ public class OptimizeRequest {
     @Valid
     private List<MetalRequest> requests;
 
-    // デフォルトコンストラクタ
-    public OptimizeRequest() {}
-
-    // コンストラクタ
-    public OptimizeRequest(List<MetalRequest> requests) {
-        this.requests = requests;
+    public OptimizeRequest() {
+        this.requests = new ArrayList<>();
     }
 
-    // Getters and Setters
+    public OptimizeRequest(List<MetalRequest> requests) {
+        if (requests == null) {
+            this.requests = new ArrayList<>();
+        } else {
+            this.requests = new ArrayList<>(requests);
+        }
+    }
+
     public List<MetalRequest> getRequests() {
-        return requests;
+        return new ArrayList<>(this.requests);
     }
 
     public void setRequests(List<MetalRequest> requests) {
-        this.requests = requests;
+        this.requests = new ArrayList<>(requests);
     }
 
-    @Override
-    public String toString() {
-        return "OptimizeRequest{" +
-                "requests=" + requests +
-                '}';
-    }
 }

@@ -1,8 +1,12 @@
 package com.example.aipairprogrammingsample.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -12,6 +16,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "holding")
+@Data
 public class Holding {
 
     @Id
@@ -20,6 +25,7 @@ public class Holding {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_metal_id", nullable = false)
+    @SuppressFBWarnings("EI_EXPOSE_REP") // Entityのため、やむを得ず
     private CompanyMetal companyMetal;
 
     @Column(nullable = false)
@@ -33,9 +39,6 @@ public class Holding {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    // デフォルトコンストラクタ
-    protected Holding() {}
-
     // コンストラクタ
     public Holding(CompanyMetal companyMetal, Integer quantity) {
         if (quantity < 0) {
@@ -44,51 +47,9 @@ public class Holding {
         this.companyMetal = companyMetal;
         this.quantity = quantity;
     }
-
-    // Getters and Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public CompanyMetal getCompanyMetal() {
-        return companyMetal;
-    }
-
-    public void setCompanyMetal(CompanyMetal companyMetal) {
-        this.companyMetal = companyMetal;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        if (quantity < 0) {
-            throw new IllegalArgumentException("Quantity cannot be negative");
-        }
-        this.quantity = quantity;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "Holding{" +
-                "id=" + id +
-                ", companyMetal=" + companyMetal +
-                ", quantity=" + quantity +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+    
+    // CT_CONSTRUCTOR_THROWで指摘された脆弱性抑止のために何もしないFinalizeメソッドをfinalとして定義
+    protected final void finalize() {
+        // Do nothing
     }
 }

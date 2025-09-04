@@ -1,6 +1,10 @@
 package com.example.aipairprogrammingsample.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +16,9 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "metal")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Metal {
 
     @Id
@@ -35,9 +42,6 @@ public class Metal {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    // デフォルトコンストラクタ
-    protected Metal() {}
-
     // コンストラクタ
     public Metal(String code, String name) {
         this.code = code;
@@ -48,58 +52,5 @@ public class Metal {
         this.code = code;
         this.name = name;
         this.unit = unit;
-    }
-
-    // Getters and Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "Metal{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                ", unit='" + unit + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
     }
 }

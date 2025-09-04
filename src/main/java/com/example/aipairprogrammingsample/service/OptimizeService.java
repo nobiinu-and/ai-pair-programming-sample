@@ -146,7 +146,7 @@ public class OptimizeService {
         // バリデーションエラー用
         public OptimizationException(String message, List<String> details) {
             super(message);
-            this.details = details;
+            this.details = new ArrayList<>(details);
             this.shortages = null;
         }
 
@@ -154,15 +154,15 @@ public class OptimizeService {
         public OptimizationException(String message, List<ErrorResponse.Shortage> shortages, boolean isShortage) {
             super(message);
             this.details = null;
-            this.shortages = shortages;
+            this.shortages = new ArrayList<>(shortages);
         }
 
         public List<String> getDetails() {
-            return details;
+            return new ArrayList<>(this.details);
         }
 
         public List<ErrorResponse.Shortage> getShortages() {
-            return shortages;
+            return new ArrayList<>(this.shortages);
         }
 
         public boolean isSupplyShortage() {

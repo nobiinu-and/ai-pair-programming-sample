@@ -1,7 +1,14 @@
 package com.example.aipairprogrammingsample.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * 最適化レスポンスDTO
@@ -12,116 +19,74 @@ public class OptimizeResponse {
     private List<UUID> companiesUsed;
     private Metrics metrics;
 
-    // デフォルトコンストラクタ
-    public OptimizeResponse() {}
-
-    // コンストラクタ
-    public OptimizeResponse(List<Assignment> assignments, List<UUID> companiesUsed, Metrics metrics) {
-        this.assignments = assignments;
-        this.companiesUsed = companiesUsed;
-        this.metrics = metrics;
+    public OptimizeResponse() {
+        this.assignments = new ArrayList<>();
+        this.companiesUsed = new ArrayList<>();
+        this.metrics = new Metrics(0, 0);
     }
 
-    // Getters and Setters
-    public List<Assignment> getAssignments() {
-        return assignments;
+    public OptimizeResponse(List<Assignment> assignments, List<UUID> companiesUsed, Metrics metrics) {
+        if (assignments == null) {
+            this.assignments = new ArrayList<>();
+        } else {
+            this.assignments = new ArrayList<>(assignments);
+        }
+        if (companiesUsed == null) {
+            this.companiesUsed = new ArrayList<>();
+        } else {
+            this.companiesUsed = new ArrayList<>(companiesUsed);
+        }
+        if (metrics == null) {
+            this.metrics = new Metrics(0, 0);
+        } else {
+            this.metrics = new Metrics(metrics.getCompanyCount(), metrics.getTotalAssigned());
+        }
     }
 
     public void setAssignments(List<Assignment> assignments) {
-        this.assignments = assignments;
+        this.assignments = new ArrayList<>(assignments);
     }
 
-    public List<UUID> getCompaniesUsed() {
-        return companiesUsed;
+    public List<Assignment> getAssignments() {
+        return new ArrayList<>(this.assignments);
     }
 
     public void setCompaniesUsed(List<UUID> companiesUsed) {
-        this.companiesUsed = companiesUsed;
+        this.companiesUsed = new ArrayList<>(companiesUsed);
     }
 
-    public Metrics getMetrics() {
-        return metrics;
+    public List<UUID> getCompaniesUsed() {
+        return new ArrayList<>(this.companiesUsed);
     }
 
     public void setMetrics(Metrics metrics) {
-        this.metrics = metrics;
+        this.metrics = new Metrics(metrics.getCompanyCount(), metrics.getTotalAssigned());
+    }
+
+    public Metrics getMetrics() {
+        return new Metrics(metrics.getCompanyCount(), metrics.getTotalAssigned());
     }
 
     /**
      * 割り当て情報
      */
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Assignment {
         private String metalCode;
         private UUID companyId;
         private Integer assignedQuantity;
-
-        // デフォルトコンストラクタ
-        public Assignment() {}
-
-        // コンストラクタ
-        public Assignment(String metalCode, UUID companyId, Integer assignedQuantity) {
-            this.metalCode = metalCode;
-            this.companyId = companyId;
-            this.assignedQuantity = assignedQuantity;
-        }
-
-        // Getters and Setters
-        public String getMetalCode() {
-            return metalCode;
-        }
-
-        public void setMetalCode(String metalCode) {
-            this.metalCode = metalCode;
-        }
-
-        public UUID getCompanyId() {
-            return companyId;
-        }
-
-        public void setCompanyId(UUID companyId) {
-            this.companyId = companyId;
-        }
-
-        public Integer getAssignedQuantity() {
-            return assignedQuantity;
-        }
-
-        public void setAssignedQuantity(Integer assignedQuantity) {
-            this.assignedQuantity = assignedQuantity;
-        }
     }
 
     /**
      * メトリクス情報
      */
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Metrics {
         private Integer companyCount;
         private Integer totalAssigned;
-
-        // デフォルトコンストラクタ
-        public Metrics() {}
-
-        // コンストラクタ
-        public Metrics(Integer companyCount, Integer totalAssigned) {
-            this.companyCount = companyCount;
-            this.totalAssigned = totalAssigned;
-        }
-
-        // Getters and Setters
-        public Integer getCompanyCount() {
-            return companyCount;
-        }
-
-        public void setCompanyCount(Integer companyCount) {
-            this.companyCount = companyCount;
-        }
-
-        public Integer getTotalAssigned() {
-            return totalAssigned;
-        }
-
-        public void setTotalAssigned(Integer totalAssigned) {
-            this.totalAssigned = totalAssigned;
-        }
     }
 }
