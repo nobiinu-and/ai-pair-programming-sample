@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DataJpaTest
 @ActiveProfiles("test")
+@Sql(scripts = "classpath:cleanup.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class RepositoryIntegrationTest {
 
     @Autowired
@@ -44,12 +46,6 @@ class RepositoryIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        // 既存データをクリア（外部キー制約があるため順序重要）
-        holdingRepository.deleteAll();
-        companyMetalRepository.deleteAll();
-        companyRepository.deleteAll();
-        metalRepository.deleteAll();
-
         // 会社データの作成と保存
         List<Company> companies = List.of(
                 new Company("TechMetal Corp", "contact@techmetal.com"),

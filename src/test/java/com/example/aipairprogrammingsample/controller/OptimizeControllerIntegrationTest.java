@@ -17,6 +17,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
 @Transactional
+@Sql(scripts = "classpath:cleanup.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class OptimizeControllerIntegrationTest {
 
     private MockMvc mockMvc;
@@ -60,12 +62,6 @@ class OptimizeControllerIntegrationTest {
         // MockMvcをセットアップ
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         
-        // 既存データをクリア
-        holdingRepository.deleteAll();
-        companyMetalRepository.deleteAll();
-        companyRepository.deleteAll();
-        metalRepository.deleteAll();
-
         // テストデータの準備
         setupTestData();
     }

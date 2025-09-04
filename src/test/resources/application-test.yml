@@ -1,0 +1,30 @@
+# テスト用設定
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate  # Flywayがスキーマを管理するため
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+  
+  flyway:
+    enabled: true  # テストでもマイグレーションを有効化
+    locations: classpath:db/migration  # メインのマイグレーションを使用
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    clean-disabled: false  # テストではクリーンを許可
+
+# ログレベル設定
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    com.example.aipairprogrammingsample: DEBUG
